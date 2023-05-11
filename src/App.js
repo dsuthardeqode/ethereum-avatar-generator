@@ -2,18 +2,15 @@ import "./styles.css";
 import jazzicon from "@metamask/jazzicon";
 import { useEffect } from "react";
 
-const charMapper = {
-  a: 1,
-  b: 2,
-  c: 3,
-  d: 4,
-  e: 5,
-  f: 6,
-  g: 7,
-  h: 8,
-  i: 9,
-  x: 10
-};
+const charMapper = (function getCharMapper() {
+  let chars = {};
+  String("abcdefghijklmnopqrstuvwxyz")
+    .split("")
+    .map((char, _index) => {
+      chars[char] = _index + 1;
+    });
+  return chars;
+})();
 
 function is_numeric(str) {
   return /^\d+$/.test(str);
@@ -39,10 +36,16 @@ export default function App() {
 
     root1.innerHTML = null;
     root2.innerHTML = null;
+
+    // Solana address
     const el1 = jazzicon(
       50,
-      Math.round(toHexSum("0x4c12F7419BA221d812F6E2947BffE1d16E0a5C4d") * 10000)
+      Math.round(
+        toHexSum("4tYdsA6LvbDkQPsFQmTEUJHg2vuMSdzw7mAZzsWQPV69") * 10000
+      )
     );
+
+    // EVM address
     var el2 = jazzicon(
       100,
       Math.round(toHexSum("0xe71C88b156ab9E08445914ACA3d7aaE5F54a80B1") * 10000)
